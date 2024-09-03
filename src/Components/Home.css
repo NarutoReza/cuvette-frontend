@@ -1,0 +1,10 @@
+.homeContainer{
+    /* background-color: green; */
+    padding: 5px;
+}
+
+.homeContainer .row{
+    border: 1px solid rgb(237, 239, 242);
+    border-radius: 5px;
+    height: 100vh;
+}
