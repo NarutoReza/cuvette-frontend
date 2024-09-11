@@ -6,6 +6,9 @@ import SidebarMenu from 'react-bootstrap-sidebar-menu'
 
 function Navebar() {
     const navigate = useNavigate();
+    const pathname = window.location.href;
+    console.log(pathname);
+    
 
     const [ matches, setMatches ] = useState(window.matchMedia('(max-width: 767px)').matches);
     console.log(matches);
@@ -35,24 +38,31 @@ function Navebar() {
     const [ xsDisplay, setXsDisplay ] = useState('')
 
     useEffect(() => {
-        if(matches == true){
-            if(matches2 == true){
-                setXsAmount(0);
-                setXsDisplay('none');
-                setNavDisplay('');
+        if(pathname == `${process.env.REACT_APP_FRONTEND_URL}/`){
+            setXsAmount(0);
+            setXsDisplay('none');
+            setNavDisplay('none');
+        }
+        else{
+            if(matches == true){
+                if(matches2 == true){
+                    setXsAmount(0);
+                    setXsDisplay('none');
+                    setNavDisplay('');
+                }
+                else if(matches2 == false){
+                    setXsAmount(1);
+                    setXsDisplay('');
+                    setNavDisplay('none');
+                }
             }
-            else if(matches2 == false){
-                setXsAmount(1);
+            else if(matches == false){
+                setXsAmount(2);
                 setXsDisplay('');
                 setNavDisplay('none');
             }
         }
-        else if(matches == false){
-            setXsAmount(2);
-            setXsDisplay('');
-            setNavDisplay('none');
-        }
-    }, [matches, matches2])
+    }, [pathname, matches, matches2])
   return (
     <>
         <Navbar collapseOnSelect expand='lg' className='bg-body-tertiary topNav' bg='light' data-bs-theme='light'>
