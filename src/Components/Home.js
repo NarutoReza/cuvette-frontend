@@ -134,12 +134,26 @@ function Home() {
     )
   }
 
+  console.log(`${process.env.REACT_APP_BACKEND_URL}/class-student`);
+
   const submit = e => {
     e.preventDefault();
     if(logger == 'Student'){
       axios
-        .post(`${process.env.REACT_APP_BACKEND_URL}/class-student`, { name: data.name, dob: data.dob, className: data.class, classYear: 2024 })
-        .then(res => console.log(res))
+        .post(`${process.env.REACT_APP_BACKEND_URL}/class-student`, { name: data.name, dob: new Date(data.dob).toLocaleDateString("en-GB"), className: data.class, classYear: 2024 })
+        .then(res => console.log(res.data))
+        .catch(err => console.log(err))
+    }
+    else if(logger == 'Teacher'){
+      axios
+        .post(`${process.env.REACT_APP_BACKEND_URL}/teacher`, { name: data.name, dob: data.dob })
+        .then(res => console.log(res.data))
+        .catch(err => console.log(err))
+    }
+    else if(logger == 'Admin'){
+      axios
+        .post(`${process.env.REACT_APP_BACKEND_URL}/admin-login`, { name: data.name, password: data.password })
+        .then(res => console.log(res.data))
         .catch(err => console.log(err))
     }
   }
