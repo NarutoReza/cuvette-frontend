@@ -3,6 +3,9 @@ import './Home.css'
 import { Col, Container, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router'
 import axios from 'axios';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 function Home() {
   const navigate = useNavigate();
@@ -153,7 +156,19 @@ function Home() {
     else if(logger == 'Admin'){
       axios
         .post(`${process.env.REACT_APP_BACKEND_URL}/admin-login`, { name: data.name, password: data.password })
-        .then(res => console.log(res.data))
+        .then(res => {
+          if(res.data == 'Password does not match') alert('Please enter a correct password');
+          else if(res.data == 'Admin name does not match') alert('Admin name does not match');
+          else if(res.data == 'Not accessible') alert('Not accessible');
+          else{
+            cookies.set('name', data.name, { path: '/', maxAge: 3600 });
+            cookies.set('password', data.password, { path: '/', maxAge: 3600 });
+            cookies.set('accessToken', res.data.accessToken, { path: '/', maxAge: 3600 });
+            cookies.set('refreshToken', res.data.refreshToken, { path: '/', maxAge: 3600 });
+            alert('Welcome Admin');
+            navigate('/admin-dashboard');
+          }
+        })
         .catch(err => console.log(err))
     }
   }
