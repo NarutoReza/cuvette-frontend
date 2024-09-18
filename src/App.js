@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navebar from './Navebar';
 import Home from './Components/Home';
 import Dashboard from './Components/Admin/Dashboard';
+import Students from './Components/Admin/Students';
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
 
           {/* admin pages */}
           <Route path='/admin-dashboard' element={<Dashboard />} />
+          <Route path='/admin-students' element={<Students
+           />} />
         </Route>
       </Routes>
     </BrowserRouter>

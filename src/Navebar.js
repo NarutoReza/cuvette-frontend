@@ -16,7 +16,7 @@ function Navebar() {
     const [ password, setPassword ] = useState('');
     const [ accessToken, setAccessToken ] = useState('');
     const [ refreshToken, setRefreshToken ] = useState('');
-    console.log({name, password, accessToken, refreshToken});
+    // console.log({name, password, accessToken, refreshToken});
     
 
     useEffect(() => {
@@ -57,7 +57,7 @@ function Navebar() {
             setAccessToken('');
             setRefreshToken('');
         }
-    })
+    }, [1000])
 
     const logout = () => {
         cookies.remove('name');
@@ -70,6 +70,27 @@ function Navebar() {
         setRefreshToken('');
         navigate('/');
     }
+
+    useEffect(() => {
+        if(pathname.includes('/admin')){
+            if(name == '') window.location.href = '/';
+            else{
+                if(password == '') window.location.href = '/';
+                else{
+                    if(accessToken == '') window.location.href = '/';
+                    else{
+                        if(refreshToken == '') window.location.href = '/';
+                        else{
+                            // do nothing
+                        }
+                    }
+                }
+            }
+        }
+        else{
+            // do nothing
+        }
+    }, [ pathname, name, password, accessToken, refreshToken])
 
     const userLog = () => {
         if(cookies.get('name')){
@@ -163,7 +184,10 @@ function Navebar() {
                             <Navbar.Collapse id='basic-navbar-nav'>
                                 <Nav className='me-auto'>
                                     <Nav.Item>
-                                        <Nav.Link>Dashboard</Nav.Link>
+                                        <Nav.Link onClick={() => navigate('/admin-dashboard')}><a><i class="fa-solid fa-gauge"></i></a> Dashboard</Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link onClick={() => navigate('/admin-students')}><a><i class="fa-solid fa-graduation-cap"></i></a> Students</Nav.Link>
                                     </Nav.Item>
                                 </Nav>
                             </Navbar.Collapse>
@@ -173,13 +197,23 @@ function Navebar() {
                 <Col xs={xsAmount} className='sidebar' style={{'display': xsDisplay}}>
                     <SidebarMenu>
                         <SidebarMenu.Body>
-                            <SidebarMenu.Nav>
+                            <SidebarMenu.Nav onClick={() => navigate('/admin-dashboard')}>
                                 <SidebarMenu.Nav.Link>
                                     <SidebarMenu.Nav.Icon>
                                         <a><i class="fa-solid fa-gauge"></i></a>
                                     </SidebarMenu.Nav.Icon>
 
                                     <SidebarMenu.Nav.Title>Dashboard</SidebarMenu.Nav.Title>
+                                </SidebarMenu.Nav.Link>
+                            </SidebarMenu.Nav>
+
+                            <SidebarMenu.Nav onClick={() => navigate('/admin-students')}>
+                                <SidebarMenu.Nav.Link>
+                                    <SidebarMenu.Nav.Icon>
+                                        <a><i class="fa-solid fa-graduation-cap"></i></a>
+                                    </SidebarMenu.Nav.Icon>
+
+                                    <SidebarMenu.Nav.Title>Students</SidebarMenu.Nav.Title>
                                 </SidebarMenu.Nav.Link>
                             </SidebarMenu.Nav>
                         </SidebarMenu.Body>
