@@ -8,3 +8,38 @@
     border-radius: 4px;
     height: 100vh;
 }
+
+.admin-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 5px 0px;
+}
+
+.admin-header h6{
+    font-size: 25px;
+}
+
+.selection{
+    display: flex;
+    flex-direction: row;
+}
+
+.select-list{
+    display: flex;
+    flex-direction: row;
+}
+
+.select-list label{
+    font-size: 16px;
+}
+
+.select-list select{
+    width: 107px;
+    height: 25px;
+    margin-left: 5px;
+}
+
+thead{
+    text-align: center;
+}

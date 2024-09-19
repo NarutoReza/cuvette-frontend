@@ -52,8 +52,23 @@ function Students() {
         }
     })
 
+    const [ data, setData ] = useState({
+        className: '',
+        classYear: '2024'
+    });
+    console.log(data);
+
+    const updateData = e => {
+        setData({
+            ...data,
+            [e.target.name]: e.target.value
+        })
+    }
+
     const [ classes, setClasses ] = useState([]);
-    console.log(classes)
+    console.log(classes);
+    const classLength = classes.length;
+    console.log(classLength);
 
     useEffect(() => {
         if(refreshToken == '') setClasses([]);
@@ -61,7 +76,7 @@ function Students() {
             if(accessToken == '') setClasses([]);
             else{
                 axios
-                    .post(`${process.env.REACT_APP_BACKEND_URL}/classes`, { year: 2024, refreshToken: refreshToken}, { headers: { 'Authorization': `Bearer ${accessToken}`}})
+                    .post(`${process.env.REACT_APP_BACKEND_URL}/classes`, { year: data.classYear, refreshToken: refreshToken}, { headers: { 'Authorization': `Bearer ${accessToken}`}})
                     .then(res => {
                         if(res.data == 'Access Denied.') setClasses([]);
                         else if(res.data == 'Access needed!') setClasses([]);
@@ -70,18 +85,25 @@ function Students() {
                     .catch(err => setClasses([]))
             }
         }
-    }, [accessToken, refreshToken])
+    }, [accessToken, refreshToken, data.classYear])
 
-    const [ data, setData ] = useState({
-        className: ''
-    })
+    const years = [ 2024, 2023, 2022, 2021, 2020 ];
 
-    const updateData = e => {
-        setData({
-            ...data,
-            [e.target.name]: e.target.value
-        })
+    const classMap = () => {
+        if(classLength == 0) return(
+            <option value='' disabled>No Classes Available</option>
+        )
+
+        else return(
+                classes && classes?.map((item, index) => {
+                    return(
+                        <option key={index} value={item.name}>{item.name}</option>
+                    )
+                })
+        )
     }
+
+    const [ students, setStudents ] = useState([]);
   return (
     <Container fluid className='admin-student-container'>
         <Row className='admin-student-row'>
@@ -91,15 +113,33 @@ function Students() {
                 </div>
             </Col>
 
-            <Col sm='12'>
+            <Col sm='12' className='selection'>
                 <div className='select-list'>
                     <label for='className'>Select Class</label>
-                    <select name='className'>
+                    <select name='className' onChange={updateData}>
                         <option value='' disabled selected hidden>Select Class</option>
-                        {
+                        {/* {
                             classes && classes?.map((item, index) => {
-                                return(
+                                if(classLength !== 0) return(
                                     <option key={index} value={item.name}>{item.name}</option>
+                                )
+                                else return(
+                                    <option key={index} value=''>No Classes Available</option>
+                                )
+                            })
+                        } */}
+                        {classMap()}
+                    </select>
+                </div>
+
+                <div className='select-list'>
+                    <label for='classYear'>Select Class</label>
+                    <select name='classYear' onChange={updateData}>
+                        <option value='' disabled selected hidden>Select Year</option>
+                        {
+                            years && years?.map((item, index) => {
+                                return(
+                                    <option key={index} value={item}>{item}</option>
                                 )
                             })
                         }
@@ -112,7 +152,20 @@ function Students() {
                     <table className='table table-striped'>
                         <thead>
                             <tr>
-                                <th scope='col'></th>
+                                <th scope='col'>Sr. No.</th>
+                                <th scope='col'>Name</th>
+                                <th scope='col'>Class</th>
+                                <th scope='col'>Roll No.</th>
+                                <th scope='col'>Gender</th>
+                                <th scope='col'>Date of Birth</th>
+                                <th scope='col'>Email</th>
+                                <th scope='col'>Mobile No.</th>
+                                <th scope='col'>Alternate Mobile No.</th>
+                                <th scope='col'>Permanent Address</th>
+                                <th scope='col'>Correspondence Address</th>
+                                <th scope='col'>Fees Paid</th>
+                                <th scope='col'>Edit</th>
+                                <th scope='col'>Delete</th>
                             </tr>
                         </thead>
                     </table>
