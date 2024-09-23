@@ -3,10 +3,15 @@ import './Students.css';
 import { Col, Container, Row } from 'react-bootstrap';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import { useNavigate } from 'react-router';
 
 const cookies = new Cookies();
 
 function Students() {
+    const navigate = useNavigate();
+    
     const [ name, setName ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ accessToken, setAccessToken ] = useState('');
@@ -104,12 +109,56 @@ function Students() {
     }
 
     const [ students, setStudents ] = useState([]);
+
+    const [ matches, setMatches ] = useState(window.matchMedia('(max-width: 425px)').matches);
+
+    const popupStyle = () => {
+        if(matches == true) return {'width': '100%'}
+        else if(matches == false) return {'width': '500px'}
+    }
+
+    useEffect(() => {
+        window
+            .matchMedia('(max-width: 425px)')
+            .addEventListener('change', e => setMatches( e.matches ))
+    });
+
   return (
     <Container fluid className='admin-student-container'>
         <Row className='admin-student-row'>
             <Col sm='12'>
                 <div className='admin-header'>
                     <h6>Students List</h6>
+                </div>
+            </Col>
+
+            <Col sm='12'>
+                <div className='add-header'>
+                    {/* <Popup trigger={<button className='add-btn'><i class="fa-solid fa-plus"></i> Add Student</button>} modal nested contentStyle={popupStyle()}>
+                        {
+                            close => (
+                                <Container className='add-popup'>
+                                    <Row>
+                                        <Col sm='12' className='d-flex justify-content-end'>
+                                            <button className='close-btn' onClick={() => close()}><i class="fa-solid fa-xmark"></i></button>
+                                        </Col>
+
+                                        <Col sm='12' className='add-data-from'>
+                                            <h4>Add Student</h4>
+
+                                            <form>
+                                                <div className='form-group'>
+                                                    <input className='form-control' />
+                                                </div>
+                                            </form>
+                                        </Col>
+                                    </Row>
+                                </Container>
+                            )
+                        }
+                    </Popup> */}
+
+                    <button className='add-btn' onClick={() => navigate('/admin-add-student')}><i class="fa-solid fa-plus"></i> Add Student</button>
                 </div>
             </Col>
 

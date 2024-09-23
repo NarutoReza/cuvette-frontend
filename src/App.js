@@ -5,6 +5,7 @@ import Navebar from './Navebar';
 import Home from './Components/Home';
 import Dashboard from './Components/Admin/Dashboard';
 import Students from './Components/Admin/Students';
+import AddStudent from './Components/Admin/AddStudent';
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
           <Route path='/admin-dashboard' element={<Dashboard />} />
           <Route path='/admin-students' element={<Students
            />} />
+           <Route path='/admin-add-student' element={<AddStudent
+            />} />
         </Route>
       </Routes>
     </BrowserRouter>

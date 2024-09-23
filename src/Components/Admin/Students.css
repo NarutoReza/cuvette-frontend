@@ -16,8 +16,74 @@
     padding: 5px 0px;
 }
 
+.add-header .add-btn{
+    color: rgb(228, 231, 236);
+    background-color: black;
+    border: 2px solid rgb(228, 231, 236);
+    border-radius: 4px;
+}
+
+.add-header .add-btn:hover{
+    color: black;
+    background-color: rgb(228, 231, 236);
+    border: 2px solid black;
+}
+
+.add-header .add-btn:focus{
+    outline: 0;
+}
+
 .admin-header h6{
     font-size: 25px;
+}
+
+.add-header{
+    float: right;
+}
+
+.popup-content{
+    border-radius: 7px;
+}
+
+.add-popup{
+    background-color: rgb(228, 231, 236);
+    border-radius: 7px;
+    padding: 7px;
+}
+
+.close-btn{
+    border: 2px solid white;
+    border-radius: 3px;
+    background-color: black;
+    color: rgb(228, 231, 236);
+}
+
+.close-btn:hover{
+    color: black;
+    background-color: rgb(228, 231, 236);
+    border: 2px solid black;
+}
+
+.close-btn:focus{
+    outline: 0;
+}
+
+.add-data-from{
+    width: 100%;
+    text-align: center;
+}
+
+.add-data-from h4{
+    font-size: 25px;
+}
+
+.add-data-from form{
+    
+}
+
+.add-data-from form .form-control{
+    max-width: 400px;
+    margin: auto;
 }
 
 .selection{
