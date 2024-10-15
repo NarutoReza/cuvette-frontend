@@ -61,7 +61,7 @@ function Students() {
         className: '',
         classYear: '2024'
     });
-    console.log(data);
+    // console.log(data);
 
     const updateData = e => {
         setData({
@@ -71,9 +71,9 @@ function Students() {
     }
 
     const [ classes, setClasses ] = useState([]);
-    console.log(classes);
+    // console.log(classes);
     const classLength = classes.length;
-    console.log(classLength);
+    // console.log(classLength);
 
     useEffect(() => {
         if(refreshToken == '') setClasses([]);
@@ -109,6 +109,24 @@ function Students() {
     }
 
     const [ students, setStudents ] = useState([]);
+    console.log(students);
+
+    useEffect(() => {
+        if(refreshToken == '') setClasses([]);
+        else{
+            if(accessToken == '') setClasses([]);
+            else{
+                axios
+                    .post(`${process.env.REACT_APP_BACKEND_URL}/class-students`, { className: data.className, classYear: data.classYear, refreshToken: refreshToken}, { headers: { 'Authorization': `Bearer ${accessToken}`}})
+                    .then(res => {
+                        if(res.data == 'Access Denied.') setStudents([]);
+                        else if(res.data == 'Access needed!') setStudents([]);
+                        else setStudents(res.data);
+                    })
+                    .catch(err => setStudents([]))
+            }
+        }
+    }, [ data.className, data.classYear, refreshToken, accessToken ])
 
     const [ matches, setMatches ] = useState(window.matchMedia('(max-width: 425px)').matches);
 
@@ -217,6 +235,31 @@ function Students() {
                                 <th scope='col'>Delete</th>
                             </tr>
                         </thead>
+
+                        <tbody>
+                            {
+                                students && students?.map((item, index) => {
+                                    return(
+                                        <tr key={index}>
+                                            <td>{index+1}</td>
+                                            <td>{item.name}</td>
+                                            <td>{item.class}</td>
+                                            <td>{item.rollNo}</td>
+                                            <td>{item.gender}</td>
+                                            <td>DATE</td>
+                                            <td>{item.email}</td>
+                                            <td>{item.mobile}</td>
+                                            <td>{item.mobile2}</td>
+                                            <td>PERMANENT</td>
+                                            <td>CORRESPONDENCE</td>
+                                            <td>{item.feesPaid}</td>
+                                            <td>EDIT</td>
+                                            <td>DELETE</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </tbody>
                     </table>
                 </div>
             </Col>
