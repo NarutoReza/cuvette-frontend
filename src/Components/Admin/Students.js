@@ -6,6 +6,7 @@ import Cookies from 'universal-cookie';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { useNavigate } from 'react-router';
+import { PaginationControl } from 'react-bootstrap-pagination-control';
 
 const cookies = new Cookies();
 
@@ -94,6 +95,14 @@ function Students() {
 
     const years = [ 2024, 2023, 2022, 2021, 2020 ];
 
+    const [ year, setYear ] = useState(0);
+    // console.log(year);
+
+    useEffect(() => {
+        const currDate = new Date(Date.now());
+        setYear(currDate.getFullYear());
+    }, [])
+
     const classMap = () => {
         if(classLength == 0) return(
             <option value='' disabled>No Classes Available</option>
@@ -109,7 +118,7 @@ function Students() {
     }
 
     const [ students, setStudents ] = useState([]);
-    console.log(students);
+    // console.log(students);
 
     useEffect(() => {
         if(refreshToken == '') setClasses([]);
@@ -140,6 +149,21 @@ function Students() {
             .matchMedia('(max-width: 425px)')
             .addEventListener('change', e => setMatches( e.matches ))
     });
+
+    const handlePageClick = e => {
+
+    }
+
+    const [ page, setPage ] = useState(1);
+    const [ limit, setLimit ] = useState(5);
+    const [ i, setI] = useState(0);
+    const [ n, setN ] = useState(4);
+    console.log({i, n});
+
+    useEffect(() => {
+        setI(limit*(page-1));
+        setN(limit+limit*(page-1)-1);
+    }, [ page, limit ])
 
   return (
     <Container fluid className='admin-student-container'>
@@ -200,16 +224,28 @@ function Students() {
                 </div>
 
                 <div className='select-list'>
-                    <label for='classYear'>Select Class</label>
+                    <label for='classYear'>Select Year</label>
                     <select name='classYear' onChange={updateData}>
-                        <option value='' disabled selected hidden>Select Year</option>
+                        <option value={year} selected>{year}</option>
                         {
                             years && years?.map((item, index) => {
-                                return(
-                                    <option key={index} value={item}>{item}</option>
-                                )
+                                if(item !== year){
+                                    return(
+                                        <option key={index} value={item}>{item}</option>
+                                    )
+                                }
                             })
                         }
+                    </select>
+                </div>
+            </Col>
+
+            <Col sm='12' className='selection'><div className='select-list'>
+                    <label for='limit'>Show Items</label>
+                    <select name='limit' onChange={ e => setLimit(parseInt(e.target.value)) }>
+                        <option value={5} selected>5</option>
+                        <option value={10}>10</option>
+                        <option value={15}>15</option>
                     </select>
                 </div>
             </Col>
@@ -239,29 +275,35 @@ function Students() {
                         <tbody>
                             {
                                 students && students?.map((item, index) => {
-                                    return(
-                                        <tr key={index}>
-                                            <td>{index+1}</td>
-                                            <td>{item.name}</td>
-                                            <td>{item.class}</td>
-                                            <td>{item.rollNo}</td>
-                                            <td>{item.gender}</td>
-                                            <td>DATE</td>
-                                            <td>{item.email}</td>
-                                            <td>{item.mobile}</td>
-                                            <td>{item.mobile2}</td>
-                                            <td>PERMANENT</td>
-                                            <td>CORRESPONDENCE</td>
-                                            <td>{item.feesPaid}</td>
-                                            <td>EDIT</td>
-                                            <td>DELETE</td>
-                                        </tr>
-                                    )
+                                    while(index>=i && index <=n){
+                                        return(
+                                            <tr key={index}>
+                                                <td>{index+1}</td>
+                                                <td>{item.name}</td>
+                                                <td>{item.class}</td>
+                                                <td>{item.rollNo}</td>
+                                                <td>{item.gender}</td>
+                                                <td>DATE</td>
+                                                <td>{item.email}</td>
+                                                <td>{item.mobile}</td>
+                                                <td>{item.mobile2}</td>
+                                                <td>PERMANENT</td>
+                                                <td>CORRESPONDENCE</td>
+                                                <td>{item.feesPaid}</td>
+                                                <td>EDIT</td>
+                                                <td>DELETE</td>
+                                            </tr>
+                                        )
+                                    }
                                 })
                             }
                         </tbody>
                     </table>
                 </div>
+            </Col>
+
+            <Col sm='12' className='pagination-controller'>
+                <PaginationControl page={page} between={4} total={students.length} limit={limit} changePage={(page) => setPage(page) } ellipsis={1} />
             </Col>
         </Row>
     </Container>

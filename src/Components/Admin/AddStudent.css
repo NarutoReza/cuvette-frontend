@@ -19,3 +19,33 @@
     border: 0;
     border-radius: 7px;
 }
+
+.form-checkbox{
+    display: flex;
+    flex-direction: row;
+}
+
+.form-checkbox label{
+    padding: 7.5px 0px 0px 5px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number]{
+    -moz-appearance: textfield;
+}
+
+@media screen and (max-width: 530px){
+    .form-checkbox{
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .form-checkbox label{
+        padding: 0px 0px 0px 0px;
+    }
+}

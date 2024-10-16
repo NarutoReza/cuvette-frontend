@@ -89,6 +89,11 @@
 .selection{
     display: flex;
     flex-direction: row;
+    margin: 10px 0px;
+}
+
+.selection .select-list{
+    margin-left: 10px;
 }
 
 .select-list{
@@ -108,4 +113,20 @@
 
 thead{
     text-align: center;
+}
+
+.pagination-controller{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+@media screen and (max-width: 480px){
+    .selection{
+        flex-direction: column;
+    }
+
+    .selection .select-list:last-child select{
+        margin-left: 11px;
+    }
 }
