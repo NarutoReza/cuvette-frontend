@@ -59,7 +59,7 @@ function Students() {
     })
 
     const [ data, setData ] = useState({
-        className: '',
+        className: '1',
         classYear: '2024'
     });
     // console.log(data);
@@ -103,17 +103,24 @@ function Students() {
         setYear(currDate.getFullYear());
     }, [])
 
+    // const defaultClass = () => {
+    //     if(data.className == 1) return 
+    //     else return null
+    // }
+
     const classMap = () => {
         if(classLength == 0) return(
-            <option value='' disabled>No Classes Available</option>
+            <option value='' selected disabled>No Classes Available</option>
         )
 
         else return(
-                classes && classes?.map((item, index) => {
-                    return(
-                        <option key={index} value={item.name}>{item.name}</option>
-                    )
-                })
+            <option value={data.className} selected>{data.className}</option>
+            &&
+            classes && classes?.map((item, index) => {
+                if(item.name !== data.className) return(
+                    <option key={index} value={item.name}>{item.name}</option>
+                )
+            })
         )
     }
 
@@ -208,7 +215,7 @@ function Students() {
                 <div className='select-list'>
                     <label for='className'>Select Class</label>
                     <select name='className' onChange={updateData}>
-                        <option value='' disabled selected hidden>Select Class</option>
+                        {/* {defaultClass()} */}
                         {/* {
                             classes && classes?.map((item, index) => {
                                 if(classLength !== 0) return(

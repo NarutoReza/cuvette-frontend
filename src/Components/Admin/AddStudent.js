@@ -149,31 +149,31 @@ function AddStudent() {
                     <div className='form-group'>
                         <input type='text' className='form-control my-3 input-text' autoFocus required name='permanentAddressStreetName' placeholder='Enter Permanent Street Name' onChange={updateData} />
 
-                        <i class="fa-solid fa-user input-icon"></i>
+                        <i class="fa-solid fa-street-view input-icon"></i>
                     </div>
 
                     <div className='form-group'>
                         <input type='text' className='form-control my-3 input-text' autoFocus required name='permanentAddressCity' placeholder='Enter Permanent City' onChange={updateData} />
 
-                        <i class="fa-solid fa-user input-icon"></i>
+                        <i class="fa-solid fa-building input-icon"></i>
                     </div>
 
                     <div className='form-group'>
                         <input type='text' className='form-control my-3 input-text' autoFocus required name='permanentAddressState' placeholder='Enter Permanent State' onChange={updateData} />
 
-                        <i class="fa-solid fa-user input-icon"></i>
+                        <i class="fa-solid fa-city input-icon"></i>
                     </div>
 
                     <div className='form-group'>
                         <input type='text' className='form-control my-3 input-text' autoFocus required name='permanentAddressPinCode' placeholder='Enter Permanent PinCode' onChange={updateData} />
 
-                        <i class="fa-solid fa-user input-icon"></i>
+                        <i class="fa-solid fa-map-pin input-icon"></i>
                     </div>
 
                     <div className='form-group'>
                         <input type='text' className='form-control my-3 input-text' autoFocus required name='permanentAddressCountry' placeholder='Enter Permanent Country' onChange={updateData} />
 
-                        <i class="fa-solid fa-user input-icon"></i>
+                        <i class="fa-solid fa-globe input-icon"></i>
                     </div>
 
                     <div className='form-group'>
@@ -189,31 +189,31 @@ function AddStudent() {
                     <div className='form-group'>
                         <input type='text' className='form-control my-3 input-text' autoFocus required name='correspondenceAddressStreetName' placeholder='Enter Correspondence Street Name' defaultValue={data.correspondenceAddressStreetName} onChange={updateData} disabled={disabled} />
 
-                        <i class="fa-solid fa-user input-icon"></i>
+                        <i class="fa-solid fa-street-view input-icon"></i>
                     </div>
 
                     <div className='form-group'>
                         <input type='text' className='form-control my-3 input-text' autoFocus required name='correspondenceAddressCity' placeholder='Enter Correspondence City' defaultValue={data.correspondenceAddressCity} onChange={updateData} disabled={disabled} />
 
-                        <i class="fa-solid fa-user input-icon"></i>
+                        <i class="fa-solid fa-building input-icon"></i>
                     </div>
 
                     <div className='form-group'>
                         <input type='text' className='form-control my-3 input-text' autoFocus required name='correspondenceAddressState' placeholder='Enter Correspondence State' defaultValue={data.correspondenceAddressState} onChange={updateData} disabled={disabled} />
 
-                        <i class="fa-solid fa-user input-icon"></i>
+                        <i class="fa-solid fa-city input-icon"></i>
                     </div>
 
                     <div className='form-group'>
                         <input type='text' className='form-control my-3 input-text' autoFocus required name='correspondenceAddressPinCode' placeholder='Enter Correspondence PinCode' defaultValue={data.correspondenceAddressPinCode} onChange={updateData} disabled={disabled} />
 
-                        <i class="fa-solid fa-user input-icon"></i>
+                        <i class="fa-solid fa-map-pin input-icon"></i>
                     </div>
 
                     <div className='form-group'>
                         <input type='text' className='form-control my-3 input-text' autoFocus required name='correspondenceAddressCountry' placeholder='Enter Correspondence Country' defaultValue={data.correspondenceAddressCountry} onChange={updateData} disabled={disabled} />
 
-                        <i class="fa-solid fa-user input-icon"></i>
+                        <i class="fa-solid fa-globe input-icon"></i>
                     </div>
                 </form>
             </Col>
