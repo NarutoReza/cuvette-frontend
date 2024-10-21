@@ -2,9 +2,58 @@ import React, { useEffect, useState } from 'react';
 import './AddStudent.css';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
+import axios from 'axios';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 function AddStudent() {
     const navigate = useNavigate();
+
+    const [ name, setName ] = useState('');
+    const [ password, setPassword ] = useState('');
+    const [ accessToken, setAccessToken ] = useState('');
+    const [ refreshToken, setRefreshToken ] = useState('');
+    // console.log({name, password, accessToken, refreshToken});
+
+    useEffect(() => {
+        if(cookies.get('name')){
+            if(cookies.get('password')){
+                if(cookies.get('accessToken')){
+                if(cookies.get('refreshToken')){
+                    setName(cookies.get('name'));
+                    setPassword(cookies.get('password'));
+                    setAccessToken(cookies.get('accessToken'));
+                    setRefreshToken(cookies.get('refreshToken'));
+                }
+                else{
+                    setName('');
+                    setPassword('');
+                    setAccessToken('');
+                    setRefreshToken('');
+                }
+                }
+                else{
+                    setName('');
+                    setPassword('');
+                    setAccessToken('');
+                    setRefreshToken('');
+                }
+            }
+            else{
+                setName('');
+                setPassword('');
+                setAccessToken('');
+                setRefreshToken('');
+            }
+        }
+        else{
+        setName('');
+        setPassword('');
+        setAccessToken('');
+        setRefreshToken('');
+        }
+    })
 
     const [ data, setData ] = useState({
         name: '',
@@ -37,7 +86,7 @@ function AddStudent() {
         })
     }
     
-    const classList = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ];const years = [ 2024, 2023, 2022, 2021, 2020 ];
+    const classList = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ];
 
     const [ checkbox, setCheckbox ] = useState(false);
     const [ disabled, setDisabled ] = useState(false);
@@ -66,6 +115,28 @@ function AddStudent() {
             setDisabled(false);
         }
     }, [checkbox])
+
+    const [ disabled1, setDisabled1 ] = useState(true);
+
+    useEffect(() => {
+        if(data.class == ''){
+            setDisabled1(true);
+        }
+        else{
+            setDisabled1(false);
+            axios
+                .post(`${process.env.REACT_APP_BACKEND_URL}/get-fees-structure`, { name: data.class, refreshToken: refreshToken}, { headers: { 'Authorization': `Bearer ${accessToken}`}})
+                .then(res => {
+                    setData({
+                        ...data,
+                        feesPaid: res.data.studentFees
+                    })
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+    }, [data.class])
 
   return (
     <Container fluid className='admin-student-container'>
@@ -98,13 +169,13 @@ function AddStudent() {
                     </div>
 
                     <div className='form-group'>
-                        <input type='number' className='form-control my-3 input-text' autoFocus required name='rollNo' placeholder={`Enter Student's Roll Number`} onChange={updateData} min={1} max={30} />
+                        <input type='number' className='form-control my-3 input-text' autoFocus required name='rollNo' placeholder={`Enter Student's Roll Number`} onChange={updateData} min={1} max={30} disabled={disabled1} />
 
                         <i class="fa-solid fa-hashtag input-icon"></i>
                     </div>
 
                     <div className='form-group'>
-                        <input type='number' className='form-control my-3 input-text' autoFocus required name='feesPaid' placeholder='Enter Fees Amount' onChange={updateData} />
+                        <input type='number' className='form-control my-3 input-text' autoFocus required name='feesPaid' placeholder='Enter Fees Amount' onChange={updateData} disabled={true} value={data.feesPaid} />
 
                         <i class="fa-solid fa-indian-rupee-sign input-icon"></i>
                     </div>
@@ -214,6 +285,10 @@ function AddStudent() {
                         <input type='text' className='form-control my-3 input-text' autoFocus required name='correspondenceAddressCountry' placeholder='Enter Correspondence Country' defaultValue={data.correspondenceAddressCountry} onChange={updateData} disabled={disabled} />
 
                         <i class="fa-solid fa-globe input-icon"></i>
+                    </div>
+
+                    <div className='button'>
+                        <button class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </Col>

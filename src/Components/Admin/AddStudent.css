@@ -39,6 +39,16 @@ input[type=number]{
     -moz-appearance: textfield;
 }
 
+.button{
+    display: flex;
+    justify-content: center;
+    padding: 10px 0px;
+}
+
+.button .btn{
+    text-transform: uppercase;
+}
+
 @media screen and (max-width: 530px){
     .form-checkbox{
         flex-direction: column;
